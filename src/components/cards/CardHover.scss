@@ -1,0 +1,70 @@
+@import '~styles/globals';
+
+.CardHover {
+  position: relative;
+  border-bottom: $primary-border;
+}
+
+#card-hover-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.CardHover-hover {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+}
+
+.CardHover-hoverContent {
+  position: absolute;
+  top: 1em;
+  left: 1em;
+  grid-gap: 0.5em;
+}
+
+.CardHover-hoverContent--up {
+  top: -22em;
+}
+
+.CardHover-hoverContent--left {
+  left: -14em;
+}
+
+.CardHover-hoverImage {
+  width: 15em;
+  border-radius: 4% / 3%;
+}
+
+.CardHover-hover--doubleFaced {
+  .CardHover-hoverContent {
+    display: grid;
+    grid-template-columns: auto auto;
+  }
+}
+
+.CardHover-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba($color: #000000, $alpha: 0.2);
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  padding: 1em;
+}
+
+.CardHover-modal--doubleFaced {
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1em;
+}
+
+.CardHover-modalImage {
+  width: 100%;
+  border-radius: 4% / 3%;
+}

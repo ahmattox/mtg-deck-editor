@@ -1,11 +1,13 @@
-import React from 'react';
+import React from 'react'
 
-import Layout from 'components/Layout';
+import Layout from 'components/Layout'
+
+import DeckEditor from 'components/DeckEditor/DeckEditor'
 
 const HomePage: React.FC = () => (
   <Layout>
-    <h1>Hello World</h1>
+    <DeckEditor />
   </Layout>
-);
+)
 
-export default HomePage;
+export default HomePage

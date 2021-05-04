@@ -1,16 +1,11 @@
-import './Header.scss';
+import './Header.scss'
 
-import React from 'react';
-import { Link } from 'gatsby';
+import React from 'react'
 
 const Header: React.FC = () => (
   <header>
-    <div>
-      <h1>
-        <Link to="/">FTW</Link>
-      </h1>
-    </div>
+    <div></div>
   </header>
-);
+)
 
-export default Header;
+export default Header

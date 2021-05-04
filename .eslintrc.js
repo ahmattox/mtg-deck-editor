@@ -23,8 +23,7 @@ module.exports = {
   rules: {
     indent: 0,
     curly: 'error',
-    quotes: ['error', 'single'],
-    semi: ['error', 'always'],
+    semi: ['error', 'never'],
     eqeqeq: ['error', 'smart'],
     'space-in-parens': ['error', 'never'],
     'constructor-super': 'warn',
@@ -46,17 +45,31 @@ module.exports = {
     'object-shorthand': 'error',
     'prefer-spread': 'error',
     'prefer-template': 'error',
-    'space-before-function-paren': ['error', 'never'],
     'no-console': 'warn',
     'react/prop-types': 'off',
     'react/jsx-indent': ['error', 2],
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
+    '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-use-before-define': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/explicit-member-accessibility': 'off'
+    '@typescript-eslint/explicit-member-accessibility': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/member-delimiter-style': [
+      'error',
+      {
+        multiline: {
+          delimiter: 'none',
+          requireLast: true
+        },
+        singleline: {
+          delimiter: 'semi',
+          requireLast: false
+        }
+      }
+    ]
   },
   overrides: [
     {
@@ -72,4 +85,4 @@ module.exports = {
       version: 'detect'
     }
   }
-};
+}

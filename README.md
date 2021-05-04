@@ -1,19 +1,4 @@
-# FTW Gatsby Template
-
-This is a template for setting up a [Gatsby](https://www.gatsbyjs.org) site
-using our current, preferred toolkit, configurations, and conventions for:
-
-- [Typescript](https://www.typescriptlang.org)
-- [SCSS](https://sass-lang.com)
-- [Prettier](https://prettier.io)
-- [ESLint](https://eslint.org)
-
-It includes some other scripts and basic components following our conventions,
-and not the unused boilerplate in the standard Gatsby starter.
-
-Copy this repository and delete this section to setup a new project.
-
-# FTW Gatsby Template
+# Deck Fiddler
 
 A project built with [Gatsby](https://www.gatsbyjs.org), a static site generator
 using [React](https://reactjs.org).

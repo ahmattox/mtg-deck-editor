@@ -921,6 +921,13 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+"@babel/runtime@^7.12.1", "@babel/runtime@^7.9.2":
+  version "7.14.0"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.14.0.tgz#46794bc20b612c5f75e62dd071e24dfd95f1cbe6"
+  integrity sha512-JELkvo/DlpNdJ7dlyw/eY7E0suy5i5GQH+Vlxaq1nsNJ+H7f4Vtv3jMeCEgRhZZQFXTjldYfQgv2qmM6M1v5wA==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@babel/standalone@^7.12.6":
   version "7.12.16"
   resolved "https://registry.yarnpkg.com/@babel/standalone/-/standalone-7.12.16.tgz#2a6dbb54ffc36f5873136d8f8ff9d056b6d01078"
@@ -1618,6 +1625,13 @@
     "@types/node" "*"
     "@types/responselike" "*"
 
+"@types/classnames@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@types/classnames/-/classnames-2.3.1.tgz#3c2467aa0f1a93f1f021e3b9bcf938bd5dfdc0dd"
+  integrity sha512-zeOWb0JGBoVmlQoznvqXbE0tEC/HONsnoUNH19Hc96NFsTAwTXbTqb8FMYkru1F/iqp7a18Ws3nWJvtA1sHD1A==
+  dependencies:
+    classnames "*"
+
 "@types/common-tags@^1.8.0":
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/@types/common-tags/-/common-tags-1.8.0.tgz#79d55e748d730b997be5b7fce4b74488d8b26a6b"
@@ -1691,6 +1705,14 @@
     "@types/minimatch" "*"
     "@types/node" "*"
 
+"@types/hoist-non-react-statics@^3.3.0":
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.1.tgz#1124aafe5118cb591977aeb1ceaaed1070eb039f"
+  integrity sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==
+  dependencies:
+    "@types/react" "*"
+    hoist-non-react-statics "^3.3.0"
+
 "@types/http-cache-semantics@*":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@types/http-cache-semantics/-/http-cache-semantics-4.0.0.tgz#9140779736aa2655635ee756e2467d787cfe8a2a"
@@ -1702,6 +1724,13 @@
   integrity sha512-GNkDE7bTv6Sf8JbV2GksknKOsk7OznNYHSdrtvPJXO0qJ9odZig6IZKUi5RFGi6d1bf6dgIAe4uXi3DBc7069Q==
   dependencies:
     "@types/node" "*"
+
+"@types/immutability-helper@^2.6.3":
+  version "2.6.3"
+  resolved "https://registry.yarnpkg.com/@types/immutability-helper/-/immutability-helper-2.6.3.tgz#9c864d84dabf45176904ececce439257cefdbc3c"
+  integrity sha512-WKddkNbFonQIwbplhRQuBFBVgMM7yqpfaYTlxeN6oubEU+q0TCQJx7LZvKaFXHQzP7KnPpzhCVjfYGLfBB2nzQ==
+  dependencies:
+    immutability-helper "*"
 
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0":
   version "2.0.3"
@@ -1797,12 +1826,29 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-beautiful-dnd@^13.0.0":
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/@types/react-beautiful-dnd/-/react-beautiful-dnd-13.0.0.tgz#e60d3d965312fcf1516894af92dc3e9249587db4"
+  integrity sha512-by80tJ8aTTDXT256Gl+RfLRtFjYbUWOnZuEigJgNsJrSEGxvFe5eY6k3g4VIvf0M/6+xoLgfYWoWonlOo6Wqdg==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-helmet@^6.1.0":
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/@types/react-helmet/-/react-helmet-6.1.0.tgz#af586ed685f4905e2adc7462d1d65ace52beee7a"
   integrity sha512-PYRoU1XJFOzQ3BHvWL1T8iDNbRjdMDJMT5hFmZKGbsq09kbSqJy61uwEpTrbTNWDopVphUT34zUSVLK9pjsgYQ==
   dependencies:
     "@types/react" "*"
+
+"@types/react-redux@^7.1.16":
+  version "7.1.16"
+  resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-7.1.16.tgz#0fbd04c2500c12105494c83d4a3e45c084e3cb21"
+  integrity sha512-f/FKzIrZwZk7YEO9E1yoxIuDNRiDducxkFlkw/GNMGEnK9n4K8wJzlJBghpSuOVDgEUHoDkDF7Gi9lHNQR4siw==
+  dependencies:
+    "@types/hoist-non-react-statics" "^3.3.0"
+    "@types/react" "*"
+    hoist-non-react-statics "^3.3.0"
+    redux "^4.0.0"
 
 "@types/react@*":
   version "17.0.2"
@@ -3688,6 +3734,11 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
+classnames@*, classnames@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.1.tgz#dfcfa3891e306ec1dad105d0e88f4417b8535e8e"
+  integrity sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA==
+
 clean-stack@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/clean-stack/-/clean-stack-2.2.0.tgz#ee8472dbb129e727b31e8a10a427dee9dfe4008b"
@@ -4238,6 +4289,13 @@ crypto-random-string@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/crypto-random-string/-/crypto-random-string-2.0.0.tgz#ef2a7a966ec11083388369baa02ebead229b30d5"
   integrity sha512-v1plID3y9r/lPhviJ1wrXpLeyUIGAZ2SHNYTEapm7/8A9nLPoyvVp3RK/EPFqn5kEznyWgYZNsRtYYIWbuG8KA==
+
+css-box-model@^1.2.0:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/css-box-model/-/css-box-model-1.2.1.tgz#59951d3b81fd6b2074a62d49444415b0d2b4d7c1"
+  integrity sha512-a7Vr4Q/kd/aw96bnJG332W9V9LkJO69JRcaCYDUqjp6/z0w6VcZjgAcTbgFxEPfBgdnAwlh3iwu+hLopa+flJw==
+  dependencies:
+    tiny-invariant "^1.0.6"
 
 css-color-names@0.0.4, css-color-names@^0.0.4:
   version "0.0.4"
@@ -7401,7 +7459,7 @@ hmac-drbg@^1.0.1:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.1"
 
-hoist-non-react-statics@^3.3.0:
+hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
   integrity sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==
@@ -7646,6 +7704,11 @@ imagemin@^7.0.1:
     make-dir "^3.0.0"
     p-pipe "^3.0.0"
     replace-ext "^1.0.0"
+
+immutability-helper@*, immutability-helper@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/immutability-helper/-/immutability-helper-3.1.1.tgz#2b86b2286ed3b1241c9e23b7b21e0444f52f77b7"
+  integrity sha512-Q0QaXjPjwIju/28TsugCHNEASwoCcJSyJV3uO1sOIQGI0jKgm9f41Lvz0DZj3n46cNCyAZTsEYoY4C2bVRUzyQ==
 
 import-cwd@^2.0.0:
   version "2.1.0"
@@ -9104,6 +9167,11 @@ media-typer@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
   integrity sha1-hxDXrwqmJvj/+hzgAWhUUmMlV0g=
+
+memoize-one@^5.1.1:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/memoize-one/-/memoize-one-5.2.1.tgz#8337aa3c4335581839ec01c3d594090cebe8f00e"
+  integrity sha512-zYiwtZUcYyXKo/np96AGZAckk+FWWsUdJ3cHGGmld7+AhvcWmQyGCYUh1hc4Q/pkOhb65dQR/pqCyK0cOaHz4Q==
 
 memoizee@^0.4.15:
   version "0.4.15"
@@ -11308,6 +11376,11 @@ queue-microtask@^1.2.2:
   resolved "https://registry.yarnpkg.com/queue-microtask/-/queue-microtask-1.2.2.tgz#abf64491e6ecf0f38a6502403d4cda04f372dfd3"
   integrity sha512-dB15eXv3p2jDlbOiNLyMabYg1/sXvppd8DP2J3EOCQ0AkuSXCW2tP7mnVouVLJKgUMY6yP0kcQDVpLCN13h4Xg==
 
+raf-schd@^4.0.2:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/raf-schd/-/raf-schd-4.0.3.tgz#5d6c34ef46f8b2a0e880a8fcdb743efc5bfdbc1a"
+  integrity sha512-tQkJl2GRWh83ui2DiPTJz9wEiMN20syf+5oKfB03yYP7ioZcJwsIK8FjrtLwH1m7C7e+Tt2yYBlrOpdT+dyeIQ==
+
 randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.5, randombytes@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/randombytes/-/randombytes-2.1.0.tgz#df6f84372f0270dc65cdf6291349ab7a473d4f2a"
@@ -11362,6 +11435,19 @@ rc@^1.2.7, rc@^1.2.8:
     ini "~1.3.0"
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
+
+react-beautiful-dnd@^13.1.0:
+  version "13.1.0"
+  resolved "https://registry.yarnpkg.com/react-beautiful-dnd/-/react-beautiful-dnd-13.1.0.tgz#ec97c81093593526454b0de69852ae433783844d"
+  integrity sha512-aGvblPZTJowOWUNiwd6tNfEpgkX5OxmpqxHKNW/4VmvZTNTbeiq7bA3bn5T+QSF2uibXB0D1DmJsb1aC/+3cUA==
+  dependencies:
+    "@babel/runtime" "^7.9.2"
+    css-box-model "^1.2.0"
+    memoize-one "^5.1.1"
+    raf-schd "^4.0.2"
+    react-redux "^7.2.0"
+    redux "^4.0.4"
+    use-memo-one "^1.1.1"
 
 react-dev-utils@^4.2.3:
   version "4.2.3"
@@ -11430,7 +11516,7 @@ react-hot-loader@^4.12.21:
     shallowequal "^1.1.0"
     source-map "^0.7.3"
 
-react-is@^16.12.0, react-is@^16.7.0, react-is@^16.8.1:
+react-is@^16.12.0, react-is@^16.13.1, react-is@^16.7.0, react-is@^16.8.1:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
@@ -11439,6 +11525,18 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
+
+react-redux@^7.2.0:
+  version "7.2.4"
+  resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-7.2.4.tgz#1ebb474032b72d806de2e0519cd07761e222e225"
+  integrity sha512-hOQ5eOSkEJEXdpIKbnRyl04LhaWabkDPV+Ix97wqQX3T3d2NQ8DUblNXXtNMavc7DpswyQM6xfaN4HQDKNY2JA==
+  dependencies:
+    "@babel/runtime" "^7.12.1"
+    "@types/react-redux" "^7.1.16"
+    hoist-non-react-statics "^3.3.2"
+    loose-envify "^1.4.0"
+    prop-types "^15.7.2"
+    react-is "^16.13.1"
 
 react-refresh@^0.8.3:
   version "0.8.3"
@@ -11574,6 +11672,13 @@ redux-thunk@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.3.0.tgz#51c2c19a185ed5187aaa9a2d08b666d0d6467622"
   integrity sha512-km6dclyFnmcvxhAcrQV2AkZmPQjzPDjgVlQtR0EQjxZPyJ0BnMf3in1ryuR8A2qU0HldVRfxYXbFSKlI3N7Slw==
+
+redux@^4.0.0, redux@^4.0.4:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/redux/-/redux-4.1.0.tgz#eb049679f2f523c379f1aff345c8612f294c88d4"
+  integrity sha512-uI2dQN43zqLWCt6B/BMGRMY6db7TTY4qeHHfGeKb3EOhmOKjU3KdWvNLJyqaHRksv/ErdNH7cFZWg9jXtewy4g==
+  dependencies:
+    "@babel/runtime" "^7.9.2"
 
 redux@^4.0.5:
   version "4.0.5"
@@ -13319,6 +13424,11 @@ timsort@^0.3.0:
   resolved "https://registry.yarnpkg.com/timsort/-/timsort-0.3.0.tgz#405411a8e7e6339fe64db9a234de11dc31e02bd4"
   integrity sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=
 
+tiny-invariant@^1.0.6:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-1.1.0.tgz#634c5f8efdc27714b7f386c35e6760991d230875"
+  integrity sha512-ytxQvrb1cPc9WBEI/HSeYYoGD0kWnGEOR8RY6KomWLBVhqz0RgTwVO9dLrGz7dC+nN9llyI7OKAgRq8Vq4ZBSw==
+
 tinycolor2@^1.4.1:
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/tinycolor2/-/tinycolor2-1.4.2.tgz#3f6a4d1071ad07676d7fa472e1fac40a719d8803"
@@ -13887,6 +13997,11 @@ url@^0.11.0:
   dependencies:
     punycode "1.3.2"
     querystring "0.2.0"
+
+use-memo-one@^1.1.1:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/use-memo-one/-/use-memo-one-1.1.2.tgz#0c8203a329f76e040047a35a1197defe342fab20"
+  integrity sha512-u2qFKtxLsia/r8qG0ZKkbytbztzRb317XCkT7yP8wxL0tZ/CzK2G+WWie5vWvpyeP7+YoPIwbJoIHJ4Ba4k0oQ==
 
 use@^3.1.0:
   version "3.1.1"

@@ -1,0 +1,9 @@
+.DeckEditor {
+  padding: 10px;
+}
+
+.DeckEditor-group {
+  display: grid;
+  grid-template-columns: repeat(6, 200px);
+  grid-gap: 6px;
+}

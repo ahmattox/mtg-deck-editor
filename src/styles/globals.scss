@@ -1,0 +1,86 @@
+// Colors
+
+$text-color: #1b2433;
+$light-text-color: rgba($text-color, 0.5);
+$dark-background-color: #0e1219;
+$light-background-color: #dde6ed;
+$highlight-color: #2b39ff;
+$light-border-color: rgba($text-color, 0.2);
+$pre-formatted-text-color: #4e68b7;
+
+// Sizing
+
+$logotype-height: 2.5rem;
+$text-element-max-width: 48rem;
+$text-column-width: 85vw;
+$text-column-margin: (100vw - $text-column-width) / 2;
+$text-element-max-viewport: calc(
+  (16px * ($text-element-max-width / 1rem)) * (100vw / $text-element-max-width)
+);
+
+// Decorative Elements
+
+$primary-border: 1px solid $light-border-color;
+
+@mixin block-hover {
+  transition: box-shadow 0.3s;
+
+  &:hover {
+    box-shadow: 0 5px 15px rgba($text-color, 0.15);
+  }
+}
+
+// Other Elements
+
+@mixin light-on-dark-detail {
+  background: $dark-background-color;
+  color: white;
+  font-size: 11px;
+}
+
+@mixin form-element-reset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  appearance: none;
+  font-family: inherit;
+  color: inherit;
+  font-size: inherit;
+  background: none;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+}
+
+@keyframes rotation {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(350deg);
+    transform: rotate(350deg);
+  }
+}
+
+@mixin rotation($duration: 1s) {
+  animation: rotation $duration infinite linear;
+}
+
+@mixin spinner($diameter: 24px, $stroke: 2px, $color: #5466ae) {
+  box-sizing: border-box;
+  @include rotation(1s);
+
+  font-size: $diameter;
+
+  position: absolute;
+
+  width: 1em;
+  height: 1em;
+  margin: -0.5em 0 0 -0.5em;
+
+  border: $stroke solid mix($color, #ffffff, 20%);
+  border-top-color: $color;
+  border-radius: 0.5em;
+}
