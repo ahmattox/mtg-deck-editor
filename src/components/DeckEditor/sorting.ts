@@ -1,17 +1,34 @@
-import { groupBy } from 'lodash'
+import { groupBy, sortBy } from 'lodash'
 
-import { Card, DeckLayout } from './types'
+import { Card } from './types'
+
+const colorGroupOrder = {
+  W: 1,
+  U: 2,
+  B: 3,
+  R: 4,
+  G: 5,
+  Multicolor: 6,
+  Colorless: 7,
+  Land: 8
+}
 
 export function groupCardsByColor(cards: Card[]): string[][] {
-  const groups = groupBy(cards, 'colorIdentity')
-  return Object.keys(groups).map((manaValue) => {
-    return groups[manaValue].map((card) => card.id)
-  })
+  const groups = groupBy(cards, 'colorGroup')
+
+  return sortBy(Object.keys(groups), (key) => colorGroupOrder[key]).map(
+    (manaValue) => {
+      return sortBy(groups[manaValue], 'manaValue').map((card) => card.id)
+    }
+  )
 }
 
 export function groupCardsByManaValue(cards: Card[]): string[][] {
   const groups = groupBy(cards, 'manaValue')
   return Object.keys(groups).map((manaValue) => {
-    return groups[manaValue].map((card) => card.id)
+    return sortBy(
+      groups[manaValue],
+      (card) => colorGroupOrder[card.colorGroup]
+    ).map((card) => card.id)
   })
 }

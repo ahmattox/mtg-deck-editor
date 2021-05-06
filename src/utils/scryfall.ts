@@ -49,14 +49,28 @@ export function useImageURLs(cardName: string, set?: string) {
   return useMemo(() => imageURLs(cardName, set), [cardName, set])
 }
 
+function colorGroup(card: { colors: string[]; type_line: string }): string {
+  if (card.type_line.match(/\bLand\b/)) {
+    return 'Land'
+  }
+  if (card.colors.length > 1) {
+    return 'Multicolor'
+  }
+  if (card.colors.length === 0) {
+    return 'Colorless'
+  }
+  return card.colors[0]
+}
+
 export async function fetchCollection(
   cardNames: string[]
 ): Promise<
   {
     name: string
     manaValue: number
-    colorIdentity: string
     colors: [string]
+    colorIdentity: string
+    colorGroup: string
     imageURIs: unknown
     manaCost: string
     rarity: string
@@ -81,8 +95,9 @@ export async function fetchCollection(
   return json.data.map((row) => ({
     name: row.name,
     manaValue: row.cmc,
-    colorIdentity: row.color_identity,
     colors: row.colors,
+    colorIdentity: row.color_identity,
+    colorGroup: colorGroup(row),
     imageURIs: row.image_uris,
     manaCost: row.mana_cost,
     rarity: row.rarity,
