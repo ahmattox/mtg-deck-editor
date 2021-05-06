@@ -153,24 +153,26 @@ const DeckEditor: React.FC = () => {
           </button>
         </div>
 
-        <Droppable droppableId="group-1" direction="horizontal" type="column">
-          {(provided, snapshot) => (
-            <div
-              className="DeckEditor-group"
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-            >
-              {deckLayout.columns.map((column, index) => (
-                <Column
-                  column={column}
-                  cards={cards}
-                  key={column.id}
-                  index={index}
-                />
-              ))}
-            </div>
-          )}
-        </Droppable>
+        <div className="DeckEditor-deck">
+          <Droppable droppableId="group-1" direction="horizontal" type="column">
+            {(provided, snapshot) => (
+              <div
+                className="DeckEditor-group"
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+              >
+                {deckLayout.columns.map((column, index) => (
+                  <Column
+                    column={column}
+                    cards={cards}
+                    key={column.id}
+                    index={index}
+                  />
+                ))}
+              </div>
+            )}
+          </Droppable>
+        </div>
       </div>
     </DragDropContext>
   )
