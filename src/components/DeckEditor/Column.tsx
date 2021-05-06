@@ -6,20 +6,19 @@ import classNames from 'classnames'
 import { Draggable, Droppable } from 'react-beautiful-dnd'
 
 import Card from './Card'
+import { Card as CardType } from './types'
 
 interface Props {
   column: {
     id: string
-    cards: {
-      name: string
-      id: string
-    }[]
+    cardIDs: string[]
   }
+  cards: { [id: string]: CardType }
   index: number
 }
 
 const Column: React.FC<Props> = (props) => {
-  const { column, index } = props
+  const { column, index, cards } = props
 
   return (
     <Draggable draggableId={column.id} index={index}>
@@ -33,7 +32,7 @@ const Column: React.FC<Props> = (props) => {
             className="DeckEditorColumn-heading"
             {...provided.dragHandleProps}
           >
-            {column.cards.length} Cards
+            {column.cardIDs.length} Cards
           </div>
 
           <Droppable droppableId={column.id} type="card">
@@ -46,8 +45,10 @@ const Column: React.FC<Props> = (props) => {
                 {...provided.droppableProps}
               >
                 <div>
-                  {column.cards.map((card, index) => {
-                    return <Card card={card} key={card.id} index={index} />
+                  {column.cardIDs.map((cardID, index) => {
+                    return (
+                      <Card card={cards[cardID]} key={cardID} index={index} />
+                    )
                   })}
                 </div>
               </div>

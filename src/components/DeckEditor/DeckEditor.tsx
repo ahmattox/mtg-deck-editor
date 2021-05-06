@@ -1,46 +1,46 @@
 import './DeckEditor.scss'
 
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd'
 import update from 'immutability-helper'
 import { uniqueId } from 'lodash'
 
+import { fetchCollection } from 'utils/scryfall'
+
 import { usePersistentState } from 'utils/usePersistentState'
+import { groupCardsByColor, groupCardsByManaValue } from './sorting'
 
 import Column from './Column'
 
-const initialCards = [
-  {
-    id: uniqueId('column-'),
-    cards: [
-      { name: 'Plains', id: uniqueId('card-') },
-      { name: 'Island', id: uniqueId('card-') },
-      { name: 'Swamp', id: uniqueId('card-') },
-      { name: 'Mountain', id: uniqueId('card-') },
-      { name: 'forest', id: uniqueId('card-') }
-    ]
-  },
-  {
-    id: uniqueId('column-'),
-    cards: [
-      { name: 'Unsummon', id: uniqueId('card-') },
-      { name: 'Shock', id: uniqueId('card-') }
-    ]
-  },
-  {
-    id: uniqueId('column-'),
-    cards: [
-      { name: 'Counterspell', id: uniqueId('card-') },
-      { name: 'Young Pyromancer', id: uniqueId('card-') }
-    ]
-  }
-]
+import { Card, DeckLayout } from './types'
 
 const DeckEditor: React.FC = () => {
-  const [cards, setCards] = usePersistentState(
-    'deck-editor-cards',
-    initialCards
-  )
+  const [cards, setCards] = useState<{ [id: string]: Card }>({})
+  const [deckLayout, setDeckLayout] = useState<DeckLayout>({
+    columns: [{ id: 'new-column', cardIDs: [] }]
+  })
+
+  const importCards = useCallback((cardNames: string[]) => {
+    fetchCollection(cardNames).then((result) => {
+      const newCards = result.map((card) => ({
+        ...card,
+        id: uniqueId('card-')
+      }))
+
+      setCards(
+        newCards.reduce((cards, card) => ({ ...cards, [card.id]: card }), {})
+      )
+
+      setDeckLayout({
+        columns: [
+          {
+            id: uniqueId('column-'),
+            cardIDs: newCards.map((card) => card.id)
+          }
+        ]
+      })
+    })
+  }, [])
 
   useEffect(() => {
     const onPaste = (event) => {
@@ -48,28 +48,7 @@ const DeckEditor: React.FC = () => {
 
       const cards = data.split('\n')
 
-      setCards([
-        {
-          id: uniqueId('column-'),
-          cards: cards.map((card) => ({ name: card, id: uniqueId('card-') }))
-        },
-        {
-          id: uniqueId('column-'),
-          cards: []
-        },
-        {
-          id: uniqueId('column-'),
-          cards: []
-        },
-        {
-          id: uniqueId('column-'),
-          cards: []
-        },
-        {
-          id: uniqueId('column-'),
-          cards: []
-        }
-      ])
+      importCards(cards)
     }
 
     window.addEventListener('paste', onPaste)
@@ -77,10 +56,10 @@ const DeckEditor: React.FC = () => {
     return () => {
       window.removeEventListener('paste', onPaste)
     }
-  }, [setCards])
+  }, [importCards])
 
   const onDragEnd = (result: DropResult) => {
-    const { destination, source, draggableId, type } = result
+    const { destination, source, type } = result
 
     if (!destination) {
       return
@@ -94,47 +73,85 @@ const DeckEditor: React.FC = () => {
     }
 
     if (type === 'card') {
-      const sourceColumnIndex = cards.findIndex(
+      const sourceColumnIndex = deckLayout.columns.findIndex(
         (column) => column.id === source.droppableId
       )
-      const destinationColumnIndex = cards.findIndex(
+      const destinationColumnIndex = deckLayout.columns.findIndex(
         (column) => column.id === destination.droppableId
       )
 
-      const card = cards[sourceColumnIndex].cards[source.index]
+      const cardID = deckLayout.columns[sourceColumnIndex].cardIDs[source.index]
 
-      const updatedCards = update(
-        update(cards, {
-          [sourceColumnIndex]: { cards: { $splice: [[source.index, 1]] } }
+      const udpatedDeckLayout = update(
+        update(deckLayout, {
+          columns: {
+            [sourceColumnIndex]: { cardIDs: { $splice: [[source.index, 1]] } }
+          }
         }),
         {
-          [destinationColumnIndex]: {
-            cards: { $splice: [[destination.index, 0, card]] }
+          columns: {
+            [destinationColumnIndex]: {
+              cardIDs: { $splice: [[destination.index, 0, cardID]] }
+            }
           }
         }
       )
 
-      setCards(updatedCards)
+      setDeckLayout(udpatedDeckLayout)
     } else if (type === 'column') {
-      const column = cards[source.index]
+      const column = deckLayout.columns[source.index]
 
-      const updatedCards = update(
-        update(cards, {
-          $splice: [[source.index, 1]]
+      const updatedDeckLayout = update(
+        update(deckLayout, {
+          columns: {
+            $splice: [[source.index, 1]]
+          }
         }),
         {
-          $splice: [[destination.index, 0, column]]
+          columns: {
+            $splice: [[destination.index, 0, column]]
+          }
         }
       )
 
-      setCards(updatedCards)
+      setDeckLayout(updatedDeckLayout)
     }
+  }
+
+  const sortByColor = () => {
+    const groupedIDs = groupCardsByColor(Object.values(cards))
+    setDeckLayout({
+      columns: groupedIDs.map((group) => ({
+        id: uniqueId('column-'),
+        cardIDs: group
+      }))
+    })
+  }
+
+  const sortByManaValue = () => {
+    const groupedIDs = groupCardsByManaValue(Object.values(cards))
+    setDeckLayout({
+      columns: groupedIDs.map((group) => ({
+        id: uniqueId('column-'),
+        cardIDs: group
+      }))
+    })
   }
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="DeckEditor">
         <h2>Deck Editor</h2>
+
+        <h3>Organize By</h3>
+        <div>
+          <button type="button" onClick={sortByColor}>
+            Color
+          </button>
+          <button type="button" onClick={sortByManaValue}>
+            Mana Value
+          </button>
+        </div>
 
         <Droppable droppableId="group-1" direction="horizontal" type="column">
           {(provided, snapshot) => (
@@ -143,8 +160,13 @@ const DeckEditor: React.FC = () => {
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
-              {cards.map((column, index) => (
-                <Column column={column} key={column.id} index={index} />
+              {deckLayout.columns.map((column, index) => (
+                <Column
+                  column={column}
+                  cards={cards}
+                  key={column.id}
+                  index={index}
+                />
               ))}
             </div>
           )}
