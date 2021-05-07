@@ -1,12 +1,13 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { uniqueId } from 'lodash'
 
 import { fetchCollection } from 'utils/scryfall'
-import { usePersistentState } from 'utils/usePersistentState'
+// import { usePersistentState } from 'utils/usePersistentState'
 
 import { groupCardsByColor, groupCardsByManaValue } from './sorting'
 
 import { Card, DeckLayout } from './types'
+import { normalizeLayout } from './normalizeLayout'
 
 export interface DeckEditorState {
   importCards(cardNames: string[]): void
@@ -36,35 +37,41 @@ export function useDeckEditorState(): DeckEditorState {
         newCards.reduce((cards, card) => ({ ...cards, [card.id]: card }), {})
       )
 
-      setDeckLayout({
-        columns: [
-          {
-            id: uniqueId('column-'),
-            cardIDs: newCards.map((card) => card.id)
-          }
-        ]
-      })
+      setDeckLayout(
+        normalizeLayout({
+          columns: [
+            {
+              id: uniqueId('column-'),
+              cardIDs: newCards.map((card) => card.id)
+            }
+          ]
+        })
+      )
     })
   }, [])
 
   const sortByColor = () => {
     const groupedIDs = groupCardsByColor(Object.values(cards))
-    setDeckLayout({
-      columns: groupedIDs.map((group) => ({
-        id: uniqueId('column-'),
-        cardIDs: group
-      }))
-    })
+    setDeckLayout(
+      normalizeLayout({
+        columns: groupedIDs.map((group) => ({
+          id: uniqueId('column-'),
+          cardIDs: group
+        }))
+      })
+    )
   }
 
   const sortByManaValue = () => {
     const groupedIDs = groupCardsByManaValue(Object.values(cards))
-    setDeckLayout({
-      columns: groupedIDs.map((group) => ({
-        id: uniqueId('column-'),
-        cardIDs: group
-      }))
-    })
+    setDeckLayout(
+      normalizeLayout({
+        columns: groupedIDs.map((group) => ({
+          id: uniqueId('column-'),
+          cardIDs: group
+        }))
+      })
+    )
   }
 
   return {

@@ -29,10 +29,13 @@ const Column: React.FC<Props> = (props) => {
           ref={provided.innerRef}
         >
           <div
-            className="DeckEditorColumn-heading"
+            className={classNames('DeckEditorColumn-heading', {
+              'is-empty': column.cardIDs.length === 0
+            })}
             {...provided.dragHandleProps}
           >
-            {column.cardIDs.length} Cards
+            {column.cardIDs.length}{' '}
+            {column.cardIDs.length === 1 ? 'Card' : 'Cards'}
           </div>
 
           <Droppable droppableId={column.id} type="card">

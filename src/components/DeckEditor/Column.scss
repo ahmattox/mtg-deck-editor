@@ -5,13 +5,16 @@
 
 .DeckEditorColumn-heading {
   padding: 5px;
+
+  &.is-empty {
+    visibility: hidden;
+  }
 }
 
 .DeckEditorColumn-cards {
   padding: 5px;
   border-radius: 10px;
   padding-bottom: 240px;
-  background-color: #f1f1f1;
 
   &.is-hovering {
     background-color: #cfcfcf;
