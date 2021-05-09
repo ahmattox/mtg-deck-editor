@@ -1,11 +1,15 @@
-.DeckEditor {
-}
-
-.DeckEditor-content {
+.DeckEditor-section {
   overflow-x: scroll;
   padding: 10px;
 }
 
 .DeckEditor-group {
   display: flex;
+  padding: 10px;
+  border-radius: 10px;
+  min-height: 200px;
+
+  &.is-hovering {
+    background-color: #f6f6f6;
+  }
 }

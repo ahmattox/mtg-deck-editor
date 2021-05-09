@@ -7,7 +7,7 @@ import { fetchCollection } from 'utils/scryfall'
 import { groupCardsByColor, groupCardsByManaValue } from './sorting'
 
 import { Card, DeckLayout } from './types'
-import { normalizeLayout } from './normalizeLayout'
+import { normalizeLayout } from './normalize'
 
 export interface DeckEditorState {
   importCards(cardNames: string[]): void
@@ -18,11 +18,25 @@ export interface DeckEditorState {
   sortByManaValue(): void
 }
 
+const emptyLayout: DeckLayout = {
+  sections: [
+    {
+      id: 'section-main',
+      name: 'Main Deck',
+      columnIDs: []
+    },
+    {
+      id: 'section-sideboard',
+      name: 'Sideboard',
+      columnIDs: []
+    }
+  ],
+  columns: []
+}
+
 export function useDeckEditorState(): DeckEditorState {
   const [cards, setCards] = useState<{ [id: string]: Card }>({})
-  const [deckLayout, setDeckLayout] = useState<DeckLayout>({
-    columns: [{ id: 'new-column', cardIDs: [] }]
-  })
+  const [deckLayout, setDeckLayout] = useState<DeckLayout>(emptyLayout)
 
   const importCards = useCallback((cardNames: string[]) => {
     fetchCollection(cardNames).then((result) => {
@@ -31,47 +45,68 @@ export function useDeckEditorState(): DeckEditorState {
         id: uniqueId('card-')
       }))
 
-      setDeckLayout({ columns: [] })
+      setDeckLayout(emptyLayout)
 
       setCards(
         newCards.reduce((cards, card) => ({ ...cards, [card.id]: card }), {})
       )
 
+      const column = {
+        id: uniqueId('column-'),
+        cardIDs: newCards.map((card) => card.id)
+      }
+
       setDeckLayout(
         normalizeLayout({
-          columns: [
+          sections: [
             {
-              id: uniqueId('column-'),
-              cardIDs: newCards.map((card) => card.id)
+              id: 'section-main',
+              name: 'Main Deck',
+              columnIDs: [column.id]
+            },
+            {
+              id: 'section-sideboard',
+              name: 'Sideboard',
+              columnIDs: []
             }
-          ]
+          ],
+          columns: [column]
         })
       )
     })
   }, [])
 
-  const sortByColor = () => {
-    const groupedIDs = groupCardsByColor(Object.values(cards))
+  const setColumns = (cardIDs: string[][]) => {
+    const columns = cardIDs.map((group) => ({
+      id: uniqueId('column-'),
+      cardIDs: group
+    }))
+
     setDeckLayout(
       normalizeLayout({
-        columns: groupedIDs.map((group) => ({
-          id: uniqueId('column-'),
-          cardIDs: group
-        }))
+        sections: [
+          {
+            id: 'section-main',
+            name: 'Main Deck',
+            columnIDs: columns.map((column) => column.id)
+          },
+          {
+            id: 'section-sideboard',
+            name: 'Sideboard',
+            columnIDs: []
+          }
+        ],
+        columns
       })
     )
   }
 
+  const sortByColor = () => {
+    setColumns(groupCardsByColor(Object.values(cards)))
+  }
+
   const sortByManaValue = () => {
-    const groupedIDs = groupCardsByManaValue(Object.values(cards))
-    setDeckLayout(
-      normalizeLayout({
-        columns: groupedIDs.map((group) => ({
-          id: uniqueId('column-'),
-          cardIDs: group
-        }))
-      })
-    )
+    setColumns(groupCardsByManaValue(Object.values(cards)))
   }
 
   return {

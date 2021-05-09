@@ -11,6 +11,18 @@ export interface Card {
   typeLine: string
 }
 
+export interface Section {
+  id: string
+  name: string
+  columnIDs: string[]
+}
+
+export interface Column {
+  id: string
+  cardIDs: string[]
+}
+
 export interface DeckLayout {
-  columns: { id: string; cardIDs: string[] }[]
+  sections: Section[]
+  columns: Column[]
 }

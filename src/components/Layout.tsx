@@ -1,15 +1,15 @@
-import './Layout.scss';
+import './Layout.scss'
 
-import React from 'react';
+import React from 'react'
 
-import Header from 'components/Header';
+import Header from 'components/Header'
 
 interface Props {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 const Layout: React.FC<Props> = (props) => {
-  const { children } = props;
+  const { children } = props
 
   return (
     <div>
@@ -17,7 +17,7 @@ const Layout: React.FC<Props> = (props) => {
 
       <main>{children}</main>
     </div>
-  );
-};
+  )
+}
 
-export default Layout;
+export default Layout

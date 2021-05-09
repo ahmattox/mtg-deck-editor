@@ -8,6 +8,7 @@ import Controls from './Controls'
 
 import { useDeckEditorState } from './useDeckEditorState'
 import { updateDeckLayout } from './updateDeckLayout'
+import classNames from 'classnames'
 
 const DeckEditor: React.FC = () => {
   const state = useDeckEditorState()
@@ -43,32 +44,40 @@ const DeckEditor: React.FC = () => {
       <div className="DeckEditor">
         <Controls state={state} />
 
-        <div className="DeckEditor-content">
-          <div className="DeckEditor-deck">
-            <Droppable
-              droppableId="group-1"
-              direction="horizontal"
-              type="column"
-            >
-              {(provided) => (
-                <div
-                  className="DeckEditor-group"
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                >
-                  {state.deckLayout.columns.map((column, index) => (
-                    <Column
-                      column={column}
-                      cards={state.cards}
-                      key={column.id}
-                      index={index}
-                    />
-                  ))}
-                </div>
-              )}
-            </Droppable>
+        {state.deckLayout.sections.map((section) => (
+          <div className="DeckEditor-section" key={section.id}>
+            <h2>{section.name}</h2>
+
+            <div className="DeckEditor-deck">
+              <Droppable
+                droppableId={section.id}
+                direction="horizontal"
+                type="column"
+              >
+                {(provided, snapshot) => (
+                  <div
+                    className={classNames('DeckEditor-group', {
+                      'is-hovering': snapshot.isDraggingOver
+                    })}
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                  >
+                    {section.columnIDs.map((columnID, index) => (
+                      <Column
+                        column={state.deckLayout.columns.find(
+                          (column) => column.id === columnID
+                        )}
+                        cards={state.cards}
+                        key={columnID}
+                        index={index}
+                      />
+                    ))}
+                  </div>
+                )}
+              </Droppable>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
     </DragDropContext>
   )
