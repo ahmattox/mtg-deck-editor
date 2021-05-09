@@ -1,0 +1,34 @@
+name: Check
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkhout Code
+        uses: actions/checkout@v2
+
+      - name: Install Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+
+      - name: Yarn Cache
+        uses: c-hive/gha-yarn-cache@v1
+
+      - name: Install Node Dependencies
+        run: yarn install
+
+      - name: Run ESLint
+        run: yarn lint
+
+      - name: Run Prettier Check
+        run: yarn format:check
+
+      - name: Run TypeScript
+        run: yarn types:check
