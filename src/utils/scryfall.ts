@@ -80,8 +80,8 @@ export async function fetchCollection(
     typeLine: string
   }[]
 > {
-  const newLineRegex = /^\n$|^\r$|^\s{1,}$|^$/;
-  let batch = cardNames.splice(0, scryfallFetchLimit).filter(name => !name.match(newLineRegex));
+  const newLineRegex = /^\n$|^\r$|^\s{1,}$|^$/
+  let batch = cardNames.splice(0, scryfallFetchLimit).filter(name => !name.match(newLineRegex))
   const result = []
 
   while (batch.length > 0) {
