@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { uniqueId } from 'lodash'
+import { uniqueId, flatMap } from 'lodash'
 
 import { fetchCollection } from 'utils/scryfall'
 // import { usePersistentState } from 'utils/usePersistentState'
 
 import { groupCardsByColor, groupCardsByManaValue } from './sorting'
 
-import { Card, DeckLayout } from './types'
+import { DeckLayout, Section, Card } from './types'
 import { normalizeLayout } from './normalize'
 
 export interface DeckEditorState {
@@ -17,6 +17,7 @@ export interface DeckEditorState {
   sortByColor(): void
   sortByManaValue(): void
   removeAllCards(): void
+  cardsInSection(section: Section): Card[]
 }
 
 const emptyLayout: DeckLayout = {
@@ -102,16 +103,28 @@ export function useDeckEditorState(): DeckEditorState {
     )
   }
 
-  const sortByColor = () => {
+  const sortByColor = useCallback(() => {
     setColumns(groupCardsByColor(Object.values(cards)))
-  }
+  }, [cards])
 
-  const sortByManaValue = () => {
+  const sortByManaValue = useCallback(() => {
     setColumns(groupCardsByManaValue(Object.values(cards)))
+  }, [cards])
+
+  const removeAllCards = useCallback(() => {
+    setDeckLayout(emptyLayout)
+  }, [])
+
+  const columnsInSection = (section: Section) => {
+    return deckLayout.columns.filter((column) =>
+      section.columnIDs.includes(column.id)
+    )
   }
 
-  const removeAllCards = () => {
-    setDeckLayout(emptyLayout)
+  const cardsInSection = (section: Section) => {
+    return flatMap(columnsInSection(section), (column) =>
+      column.cardIDs.map((cardID) => cards[cardID])
+    )
   }
 
   return {
@@ -121,6 +134,7 @@ export function useDeckEditorState(): DeckEditorState {
     setDeckLayout,
     sortByColor,
     sortByManaValue,
-    removeAllCards
+    removeAllCards,
+    cardsInSection
   }
 }
