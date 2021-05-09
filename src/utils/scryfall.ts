@@ -81,10 +81,12 @@ export async function fetchCollection(
   }[]
 > {
   const newLineRegex = /^\n$|^\r$|^\s{1,}$|^$/
-  const filteredCardNames = cardNames.filter((name) => !name.match(newLineRegex))
-  
-  let batches = chunk(filteredCardNames, scryfallFetchLimit)
-  
+  const filteredCardNames = cardNames.filter(
+    (name) => !name.match(newLineRegex)
+  )
+
+  const batches = chunk(filteredCardNames, scryfallFetchLimit)
+
   const result = []
 
   for (const batch of batches) {
