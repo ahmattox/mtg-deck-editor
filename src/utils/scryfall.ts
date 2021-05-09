@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { flatMap } from 'lodash'
 
 enum CardFace {
   Front = 'front',
@@ -49,17 +50,17 @@ export function useImageURLs(cardName: string, set?: string) {
   return useMemo(() => imageURLs(cardName, set), [cardName, set])
 }
 
-function colorGroup(card: { colors: string[]; type_line: string }): string {
-  if (card.type_line.match(/\bLand\b/)) {
+function colorGroup(colors: string[], type_line: string): string {
+  if (type_line.match(/\bLand\b/)) {
     return 'Land'
   }
-  if (card.colors.length > 1) {
+  if (colors.length > 1) {
     return 'Multicolor'
   }
-  if (card.colors.length === 0) {
+  if (colors.length === 0) {
     return 'Colorless'
   }
-  return card.colors[0]
+  return colors[0]
 }
 
 const scryfallFetchLimit = 75
@@ -99,17 +100,26 @@ export async function fetchCollection(
     const json = await response.json()
 
     result.push(
-      ...json.data.map((row: any) => ({
-        name: row.name,
-        manaValue: row.cmc,
-        colors: row.colors,
-        colorIdentity: row.color_identity,
-        colorGroup: colorGroup(row),
-        imageURIs: row.image_uris,
-        manaCost: row.mana_cost,
-        rarity: row.rarity,
-        typeLine: row.type_line
-      }))
+      ...json.data.map((row: any) => {
+        const colors = row.card_faces
+          ? flatMap(row.card_faces, (face) => face.colors)
+          : row.colors
+        const typeLine = row.card_faces
+          ? flatMap(row.card_faces, (face) => face.type_line).join(' ')
+          : row.type_line
+
+        return {
+          name: row.name,
+          manaValue: row.cmc,
+          colors,
+          colorIdentity: row.color_identity,
+          colorGroup: colorGroup(colors, typeLine),
+          imageURIs: row.image_uris,
+          manaCost: row.mana_cost,
+          rarity: row.rarity,
+          typeLine
+        }
+      })
     )
 
     batch = cardNames.splice(0, scryfallFetchLimit)
