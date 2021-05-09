@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { uniqueId, flatMap } from 'lodash'
+import update from 'immutability-helper'
 
 import { fetchCollection } from 'utils/scryfall'
 // import { usePersistentState } from 'utils/usePersistentState'
@@ -17,6 +18,7 @@ export interface DeckEditorState {
   sortByColor(): void
   sortByManaValue(): void
   removeAllCards(): void
+  toggleSideboard(cardID: string): void
   cardsInSection(section: Section): Card[]
 }
 
@@ -127,6 +129,52 @@ export function useDeckEditorState(): DeckEditorState {
     )
   }
 
+  const toggleSideboard = (cardID: string) => {
+    // TODO: this is a good indicator this data structure isn't great. Having
+    // both element ids and indexes in type-specific arrays is annoying.
+    const sourceColumnIndex = deckLayout.columns.findIndex((column) =>
+      column.cardIDs.includes(cardID)
+    )
+    const sourceColumn = deckLayout.columns[sourceColumnIndex]
+    const sourceCardPositionInColumn = sourceColumn.cardIDs.findIndex(
+      (id) => id === cardID
+    )
+    const sourceSection = deckLayout.sections.find((section) =>
+      section.columnIDs.includes(sourceColumn.id)
+    )
+    const sourceColumnPositionInSection = sourceSection.columnIDs.findIndex(
+      (id) => id === sourceColumn.id
+    )
+
+    const destinationSection = deckLayout.sections.find(
+      (section) => section !== sourceSection
+    )
+    const destinationColumnID =
+      destinationSection.columnIDs[sourceColumnPositionInSection]
+    const destinationColumnIndex = deckLayout.columns.findIndex(
+      (column) => column.id === destinationColumnID
+    )
+
+    setDeckLayout(
+      update(
+        update(deckLayout, {
+          columns: {
+            [sourceColumnIndex]: {
+              cardIDs: { $splice: [[sourceCardPositionInColumn, 1]] }
+            }
+          }
+        }),
+        {
+          columns: {
+            [destinationColumnIndex]: {
+              cardIDs: { $push: [cardID] }
+            }
+          }
+        }
+      )
+    )
+  }
+
   return {
     importCards,
     cards,
@@ -135,6 +183,7 @@ export function useDeckEditorState(): DeckEditorState {
     sortByColor,
     sortByManaValue,
     removeAllCards,
+    toggleSideboard,
     cardsInSection
   }
 }

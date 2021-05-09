@@ -43,8 +43,13 @@ const DeckEditor: React.FC = () => {
       <div className="DeckEditor">
         <Controls state={state} />
 
-        {state.deckLayout.sections.map((section) => (
-          <Section key={section.id} section={section} state={state} />
+        {state.deckLayout.sections.map((section, index) => (
+          <Section
+            key={section.id}
+            section={section}
+            state={state}
+            index={index}
+          />
         ))}
       </div>
     </DragDropContext>

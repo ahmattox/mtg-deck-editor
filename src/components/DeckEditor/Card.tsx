@@ -1,21 +1,28 @@
 import './Card.scss'
 
 import React from 'react'
+import classNames from 'classnames'
 import { Draggable } from 'react-beautiful-dnd'
 
+import { Card as CardType } from './types'
+import { DeckEditorState } from './useDeckEditorState'
+
 import CardImage from 'components/cards/CardImage'
-import classNames from 'classnames'
 
 export interface props {
-  card: {
-    id: string
-    name: string
-  }
+  card: CardType
+  state: DeckEditorState
   index: number
+  columnIndex: number
+  sectionIndex: number
 }
 
 const Card: React.FC<props> = (props) => {
-  const { card, index } = props
+  const { state, card, index } = props
+
+  const onClick = () => {
+    state.toggleSideboard(card.id)
+  }
 
   return (
     <Draggable draggableId={card.id} index={index}>
@@ -27,6 +34,7 @@ const Card: React.FC<props> = (props) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
+          onClick={onClick}
         >
           <CardImage>{card.name}</CardImage>
         </div>

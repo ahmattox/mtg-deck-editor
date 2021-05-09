@@ -12,10 +12,11 @@ import Column from './Column'
 interface Props {
   section: SectionType
   state: DeckEditorState
+  index: number
 }
 
 const Section: React.FC<Props> = (props) => {
-  const { section, state } = props
+  const { section, state, index } = props
 
   const cards = state.cardsInSection(section)
 
@@ -39,14 +40,15 @@ const Section: React.FC<Props> = (props) => {
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
-              {section.columnIDs.map((columnID, index) => (
+              {section.columnIDs.map((columnID, columnIndex) => (
                 <Column
+                  key={columnID}
                   column={state.deckLayout.columns.find(
                     (column) => column.id === columnID
                   )}
-                  cards={state.cards}
-                  key={columnID}
-                  index={index}
+                  state={state}
+                  index={columnIndex}
+                  sectionIndex={index}
                 />
               ))}
             </div>
