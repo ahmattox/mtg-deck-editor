@@ -1,5 +1,5 @@
 import update from 'immutability-helper'
-import { uniqueId, findLastIndex, last, takeRight } from 'lodash'
+import { uniqueId, findLastIndex, takeRight } from 'lodash'
 
 import { DeckLayout, Section, Column } from './types'
 
