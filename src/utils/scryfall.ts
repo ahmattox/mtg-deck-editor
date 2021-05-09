@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { flatMap } from 'lodash'
+import { flatMap, chunk } from 'lodash'
 
 enum CardFace {
   Front = 'front',
@@ -81,10 +81,13 @@ export async function fetchCollection(
   }[]
 > {
   const newLineRegex = /^\n$|^\r$|^\s{1,}$|^$/
-  let batch = cardNames.splice(0, scryfallFetchLimit).filter((name) => !name.match(newLineRegex))
+  const filteredCardNames = cardNames.filter((name) => !name.match(newLineRegex))
+  
+  let batches = chunk(filteredCardNames, scryfallFetchLimit)
+  
   const result = []
 
-  while (batch.length > 0) {
+  for (const batch of batches) {
     const data = {
       identifiers: batch.map((cardName) => ({ name: cardName }))
     }
@@ -122,8 +125,6 @@ export async function fetchCollection(
         }
       })
     )
-
-    batch = cardNames.splice(0, scryfallFetchLimit)
   }
 
   return result
