@@ -4,6 +4,8 @@ import React from 'react'
 import classNames from 'classnames'
 import { Droppable } from 'react-beautiful-dnd'
 
+import * as Core from 'components/core'
+
 import { Section as SectionType } from './types'
 import { DeckEditorState } from './useDeckEditorState'
 
@@ -22,9 +24,21 @@ const Section: React.FC<Props> = (props) => {
 
   return (
     <div className="DeckEditorSection" key={section.id}>
-      <h2>
-        {section.name} - {cards.length} {cards.length === 1 ? 'Card' : 'Cards'}
-      </h2>
+      <div>
+        <h2>
+          {section.name} - {cards.length}{' '}
+          {cards.length === 1 ? 'Card' : 'Cards'}
+        </h2>
+
+        <div>
+          <Core.Button onClick={() => state.sortSection(section, 'colorGroup')}>
+            Color
+          </Core.Button>
+          <Core.Button onClick={() => state.sortSection(section, 'manaValue')}>
+            Mana Value
+          </Core.Button>
+        </div>
+      </div>
 
       <div className="DeckEditor-deck">
         <Droppable
