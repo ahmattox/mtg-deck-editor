@@ -16,6 +16,7 @@ export interface DeckEditorState {
   setDeckLayout: React.Dispatch<React.SetStateAction<DeckLayout>>
   sortByColor(): void
   sortByManaValue(): void
+  removeAllCards(): void
 }
 
 const emptyLayout: DeckLayout = {
@@ -109,12 +110,17 @@ export function useDeckEditorState(): DeckEditorState {
     setColumns(groupCardsByManaValue(Object.values(cards)))
   }
 
+  const removeAllCards = () => {
+    setDeckLayout(emptyLayout)
+  }
+
   return {
     importCards,
     cards,
     deckLayout,
     setDeckLayout,
     sortByColor,
-    sortByManaValue
+    sortByManaValue,
+    removeAllCards
   }
 }

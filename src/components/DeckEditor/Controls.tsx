@@ -9,7 +9,7 @@ interface Props {
 }
 
 const Controls: React.FC<Props> = (props) => {
-  const { sortByColor, sortByManaValue } = props.state
+  const { sortByColor, sortByManaValue, removeAllCards } = props.state
 
   const cards = Object.values(props.state.cards)
 
@@ -36,6 +36,14 @@ const Controls: React.FC<Props> = (props) => {
           onClick={sortByManaValue}
         >
           Mana Value
+        </button>
+        |&nbsp;
+        <button
+          className="DeckEditorControls-button"
+          type="button"
+          onClick={removeAllCards}
+        >
+          Remove All
         </button>
       </div>
     </div>
