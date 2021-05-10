@@ -5,7 +5,7 @@ import update from 'immutability-helper'
 import { fetchCollection } from 'utils/scryfall'
 // import { usePersistentState } from 'utils/usePersistentState'
 
-import { groupCardsByColor, groupCardsByManaValue } from './sorting'
+import { groupCardsBy, SortOrder } from './sorting'
 
 import { DeckLayout, Section, Card } from './types'
 import { normalizeLayout } from './normalize'
@@ -15,8 +15,8 @@ export interface DeckEditorState {
   cards: { [id: string]: Card }
   deckLayout: DeckLayout
   setDeckLayout: React.Dispatch<React.SetStateAction<DeckLayout>>
-  sortByColor(): void
-  sortByManaValue(): void
+  sortBy(sortBy: SortOrder): void
+  sortSection(section: Section, sortBy: SortOrder): void
   removeAllCards(): void
   toggleSideboard(cardID: string): void
   cardsInSection(section: Section): Card[]
@@ -105,17 +105,63 @@ export function useDeckEditorState(): DeckEditorState {
     )
   }
 
-  const sortByColor = useCallback(() => {
-    setColumns(groupCardsByColor(Object.values(cards)))
-  }, [cards])
-
-  const sortByManaValue = useCallback(() => {
-    setColumns(groupCardsByManaValue(Object.values(cards)))
-  }, [cards])
+  const sortBy = useCallback(
+    (sortBy: SortOrder) => {
+      setColumns(groupCardsBy(Object.values(cards), sortBy))
+    },
+    [cards]
+  )
 
   const removeAllCards = useCallback(() => {
     setDeckLayout(emptyLayout)
+    setCards({})
   }, [])
+
+  const sortSection = useCallback(
+    (section: Section, sortBy: SortOrder) => {
+      const cardIDs = flatMap(
+        section.columnIDs,
+        (columnID) =>
+          deckLayout.columns.find((column) => column.id === columnID)?.cardIDs
+      )
+
+      const cardsInSection = cardIDs.map((id) => cards[id])
+
+      const groupedCards = groupCardsBy(cardsInSection, sortBy)
+
+      const sectionIndex = deckLayout.sections.findIndex(
+        (s) => s.id === section.id
+      )
+
+      const oldColumnIDs = section.columnIDs
+
+      const newColumns = groupedCards.map((group) => ({
+        id: uniqueId('column-'),
+        cardIDs: group
+      }))
+
+      const updatedLayout = update(deckLayout, {
+        sections: {
+          [sectionIndex]: {
+            columnIDs: {
+              $set: newColumns.map((column) => column.id)
+            }
+          }
+        },
+        columns: {
+          $set: [
+            ...deckLayout.columns.filter(
+              (column) => !oldColumnIDs.includes(column.id)
+            ),
+            ...newColumns
+          ]
+        }
+      })
+
+      setDeckLayout(normalizeLayout(updatedLayout))
+    },
+    [cards, deckLayout]
+  )
 
   const columnsInSection = (section: Section) => {
     return deckLayout.columns.filter((column) =>
@@ -180,8 +226,8 @@ export function useDeckEditorState(): DeckEditorState {
     cards,
     deckLayout,
     setDeckLayout,
-    sortByColor,
-    sortByManaValue,
+    sortBy,
+    sortSection,
     removeAllCards,
     toggleSideboard,
     cardsInSection

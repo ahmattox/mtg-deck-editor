@@ -13,6 +13,8 @@ const colorGroupOrder = {
   Land: 8
 }
 
+export type SortOrder = 'colorGroup' | 'manaValue'
+
 export function groupCardsByColor(cards: Card[]): string[][] {
   const groups = groupBy(cards, 'colorGroup')
 
@@ -31,4 +33,12 @@ export function groupCardsByManaValue(cards: Card[]): string[][] {
       (card) => colorGroupOrder[card.colorGroup]
     ).map((card) => card.id)
   })
+}
+
+export function groupCardsBy(cards: Card[], sortBy: SortOrder) {
+  if (sortBy === 'colorGroup') {
+    return groupCardsByColor(cards)
+  } else if (sortBy === 'manaValue') {
+    return groupCardsByManaValue(cards)
+  }
 }

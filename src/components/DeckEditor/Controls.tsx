@@ -2,6 +2,8 @@ import './Controls.scss'
 
 import React from 'react'
 
+import * as Core from 'components/core'
+
 import { DeckEditorState } from './useDeckEditorState'
 
 interface Props {
@@ -9,7 +11,7 @@ interface Props {
 }
 
 const Controls: React.FC<Props> = (props) => {
-  const { sortByColor, sortByManaValue, removeAllCards } = props.state
+  const { sortBy, removeAllCards } = props.state
 
   const cards = Object.values(props.state.cards)
 
@@ -23,28 +25,12 @@ const Controls: React.FC<Props> = (props) => {
 
       <h3>Organize By</h3>
       <div>
-        <button
-          className="DeckEditorControls-button"
-          type="button"
-          onClick={sortByColor}
-        >
-          Color
-        </button>
-        <button
-          className="DeckEditorControls-button"
-          type="button"
-          onClick={sortByManaValue}
-        >
+        <Core.Button onClick={() => sortBy('colorGroup')}>Color</Core.Button>
+        <Core.Button onClick={() => sortBy('colorGroup')}>
           Mana Value
-        </button>
+        </Core.Button>
         |&nbsp;
-        <button
-          className="DeckEditorControls-button"
-          type="button"
-          onClick={removeAllCards}
-        >
-          Remove All
-        </button>
+        <Core.Button onClick={removeAllCards}>Remove All</Core.Button>
       </div>
     </div>
   )
