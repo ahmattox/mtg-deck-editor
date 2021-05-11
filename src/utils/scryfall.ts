@@ -107,9 +107,11 @@ export async function fetchCollection(
 
     result.push(
       ...json.data.map((row: any) => {
-        const colors = row.card_faces
+        const colors = row.colors
+          ? row.colors
+          : row.card_faces
           ? flatMap(row.card_faces, (face) => face.colors)
-          : row.colors
+          : []
         const typeLine = row.card_faces
           ? flatMap(row.card_faces, (face) => face.type_line).join(' ')
           : row.type_line
