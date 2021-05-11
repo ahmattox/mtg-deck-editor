@@ -17,20 +17,21 @@ const Controls: React.FC<Props> = (props) => {
 
   return (
     <div className="DeckEditorControls">
-      <h2>Deck Editor</h2>
+      <h1>Lucky Paper: Deck Editor</h1>
 
-      <div>
-        <div>{cards.length} Cards</div>
-      </div>
+      <div className="DeckEditorControls-details">
+        <div>
+          <div>{cards.length} Cards</div>
+        </div>
 
-      <h3>Organize By</h3>
-      <div>
-        <Core.Button onClick={() => sortBy('colorGroup')}>Color</Core.Button>
-        <Core.Button onClick={() => sortBy('colorGroup')}>
-          Mana Value
-        </Core.Button>
-        |&nbsp;
-        <Core.Button onClick={removeAllCards}>Remove All</Core.Button>
+        <div className="DeckEditorControls-sortButtons">
+          <Core.Button onClick={removeAllCards}>Remove All</Core.Button>
+          |&nbsp;
+          <Core.Button onClick={() => sortBy('colorGroup')}>Color</Core.Button>
+          <Core.Button onClick={() => sortBy('colorGroup')}>
+            Mana Value
+          </Core.Button>
+        </div>
       </div>
     </div>
   )

@@ -21,26 +21,35 @@ const Section: React.FC<Props> = (props) => {
   const { section, state, index } = props
 
   const cards = state.cardsInSection(section)
+  const landCount = cards.filter((card) => card.colorGroup === 'Land').length
+  const nonLandCount = cards.length - landCount
 
   return (
     <div className="DeckEditorSection" key={section.id}>
-      <div>
-        <h2>
-          {section.name} - {cards.length}{' '}
-          {cards.length === 1 ? 'Card' : 'Cards'}
-        </h2>
+      <div className="DeckEditorSection-heading">
+        <h2 className="DeckEditorSection-title">{section.name}</h2>
+        <div className="DeckEditorSection-controls">
+          <div>
+            {cards.length} {cards.length === 1 ? 'Card' : 'Cards'}, {landCount}{' '}
+            Lands, {nonLandCount} Spells
+          </div>
 
-        <div>
-          <Core.Button onClick={() => state.sortSection(section, 'colorGroup')}>
-            Color
-          </Core.Button>
-          <Core.Button onClick={() => state.sortSection(section, 'manaValue')}>
-            Mana Value
-          </Core.Button>
+          <div>
+            <Core.Button
+              onClick={() => state.sortSection(section, 'colorGroup')}
+            >
+              Color
+            </Core.Button>
+            <Core.Button
+              onClick={() => state.sortSection(section, 'manaValue')}
+            >
+              Mana Value
+            </Core.Button>
+          </div>
         </div>
       </div>
 
-      <div className="DeckEditor-deck">
+      <div className="DeckEditorSection-cards">
         <Droppable
           droppableId={section.id}
           direction="horizontal"

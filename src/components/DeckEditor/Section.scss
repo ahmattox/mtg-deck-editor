@@ -1,6 +1,21 @@
 .DeckEditorSection {
+}
+
+.DeckEditorSection-heading {
+  padding: 16px;
+}
+
+.DeckEditorSection-cards {
   overflow-x: scroll;
-  padding: 10px;
+}
+
+.DeckEditorSection-title {
+  padding: 0 0 0.3em;
+}
+
+.DeckEditorSection-controls {
+  display: grid;
+  grid-template-columns: 1fr auto;
 }
 
 .DeckEditorSection-group {
